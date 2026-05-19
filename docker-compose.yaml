@@ -1,0 +1,28 @@
+
+services:
+  # Нижний уровень: собирает метрики напрямую с объектов
+  prom-worker:
+    image: prom/prometheus:v3.1.0 # Используем актуальную версию v3.x
+    container_name: prom-worker
+    volumes:
+      - ./prom-worker.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9091:9090" # Доступен на хосте по порту 9091
+
+  # Верхний уровень: забирает метрики из prom-worker
+  prom-master:
+    image: prom/prometheus:v3.1.0
+    container_name: prom-master
+    volumes:
+      - ./prom-master.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9092:9090" # Доступен на хосте по порту 9092
+    depends_on:
+      - prom-worker
+
