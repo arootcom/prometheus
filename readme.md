@@ -3,12 +3,38 @@
 * [Source Prometheus](https://github.com/prometheus/prometheus)
 * [All Repositories Prometheus](https://github.com/orgs/prometheus/repositories)
 
+Основные компоненты и базы данных
+
+* prometheus — центральный сервер мониторинга и СУБД для хранения временных рядов (TSDB).
+* alertmanager — сервис обработки алертов, который группирует уведомления и шлет их в Slack, Email или Telegram.
+* pushgateway — шлюз-приемник метрик от кратковременных (batch) задач, которые не могут использовать pull-модель.
+
+Официальные экспортеры (Сбор метрик)
+
+* node_exporter — агент для сбора базовых системных метрик железа и ОС (процессор, диск, память, сеть).
+* consul_exporter — утилита для трансформации метрик сервиса Consul в формат Prometheus.
+* mysqld_exporter — инструмент для мониторинга производительности СУБД MySQL.
+* snmp_exporter — экспортер для мониторинга сетевых устройств по протоколу SNMP.
+* jmx_exporter — Java-агент для сбора метрик из JVM-приложений через MBeans.
+* statsd_exporter / influxdb_exporter — прокси-серверы для перевода метрик из форматов StatsD и InfluxDB в формат Prometheus.
+
+Библиотеки разработки (SDK)
+
+* client_golang / client_java / client_python — библиотеки для интеграции метрик напрямую в код ваших приложений на Go, Java/JVM и Python.
+* exporter-toolkit — набор утилит на Go, упрощающий разработку собственных кастомных экспортеров.
+
+Инструменты анализа и интеграции
+
+* promlens — визуальный конструктор, анализатор и инструмент для объяснения сложных запросов на языке PromQL.
+* prometheus-opentelemetry-collector — брендированная сборка коллектора для интеграции со стандартами OpenTelemetry.
+* docs — исходный код и генератор официального сайта с документацией проекта.
+
 # Федеративная сеть Prometheus (Federation)
 
 1. Запустите стек: `docker compose up -d`
 2. Откройте в браузере Prometheus-Master: `http://localhost:9092`
 3. В меню `Status -> Targets`, должны увидеть, что эндпоинт `prom-worker:9090/federate` находится в статусе UP
-4. Вкладка `Graph`: введите имя любой метрики воркера (например, prometheus_http_requests_total). 
+4. Вкладка `Graph`: введите имя любой метрики воркера (например, `prometheus_http_requests_total`). 
    Вы увидите, что к ней добавился лейбл `datacenter="dc-east-1`, но сохранились старые лейблы воркера.
 
 Федерация через /federate отлично подходит для небольших сетей или иерархического сбора (например, стянуть 
