@@ -1,10 +1,15 @@
 global:
   scrape_interval: 15s
   external_labels:
-    datacenter: 'dc-east-1' # Важно! Помогает мастеру понять, откуда пришла метрика
+    datacenter: 'dc-east-1' # Помогает мастеру понять, откуда пришла метрика
 
 scrape_configs:
   - job_name: 'local-apps'
     static_configs:
       - targets: ['localhost:9090']
-
+  - job_name: 'my-local-go-app'
+    static_configs:
+      - targets: ['localhost:8080']
+  - job_name: 'my-app'
+    static_configs:
+      - targets: ['localhost:5558']

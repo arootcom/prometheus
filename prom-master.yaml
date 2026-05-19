@@ -10,7 +10,9 @@ scrape_configs:
       match[]:
         - '{job="local-apps"}' # Забрать все метрики из этой джобы
         - '{__name__=~"node_.*"}' # Или забрать все системные метрики node_exporter
-        - '{__name__=~"myapp_.*"}' # Или метрики вашего Go-приложения
+        - '{__name__=~"myapp_.*"}' # Или метрики Go-приложения
+        - '{job="my-local-go-app"}'
+        - '{job="my-app"}'
     static_configs:
-      - targets: ['prom-worker:9090'] # Стучимся во внутреннюю сеть Docker к воркеру
+      - targets: ['host.docker.internal:9090']
 
