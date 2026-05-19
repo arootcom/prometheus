@@ -1,7 +1,7 @@
 # Prometheus
 
-[Source Prometheus](https://github.com/prometheus/prometheus)
-[All Repositories Prometheus](https://github.com/orgs/prometheus/repositories)
+* [Source Prometheus](https://github.com/prometheus/prometheus)
+* [All Repositories Prometheus](https://github.com/orgs/prometheus/repositories)
 
 # Федеративная сеть Prometheus (Federation)
 
